@@ -1,3 +1,7 @@
+variable env {
+  default = "test"
+}
+
 variable admin_username {
   type    = string
   default = "testadmin"

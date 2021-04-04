@@ -17,7 +17,7 @@ resource "azurerm_network_security_group" "compute" {
 }
 
 resource "azurerm_virtual_machine" "compute" {
-  name                  = "${var.rgname}-vm01"
+  name                  = "${var.rgname}-vm"
   location            = var.location
   resource_group_name = var.rgname
   network_interface_ids = [azurerm_network_interface.compute.id]
@@ -38,7 +38,7 @@ resource "azurerm_virtual_machine" "compute" {
   }
 
   os_profile {
-    computer_name  = "${var.rgname}-vm01"
+    computer_name  = "${var.rgname}-vm"
     admin_username = var.admin_username
     admin_password = var.admin_password
   }

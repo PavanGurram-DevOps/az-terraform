@@ -1,22 +1,16 @@
 resource "azurerm_virtual_network_peering" "frontend-backend" {
-  name                      = "frontendbackend"
+  name                      = "${var.env}-frontendbackend"
   resource_group_name       = azurerm_resource_group.frontend-rg.name
-  virtual_network_name      = azurerm_virtual_network.frontend-vnet.name
-  remote_virtual_network_id = azurerm_virtual_network.backend-vnet.id
+  virtual_network_name      = module.frontendvnet.vnet_name
+  remote_virtual_network_id = module.backendvnet.vnet_id
 }
 
 resource "azurerm_virtual_network_peering" "backend-frontend" {
-  name                      = "backendfrontend"
+  name                      = "${var.env}-backendfrontend"
   resource_group_name       = azurerm_resource_group.backend-rg.name
-  virtual_network_name      = azurerm_virtual_network.backend-vnet.name
-  remote_virtual_network_id = azurerm_virtual_network.frontend-vnet.id
+  virtual_network_name      = module.backendvnet.vnet_name
+  remote_virtual_network_id = module.frontendvnet.vnet_id
 }
-
-# module.jumpbox-vm.private_ip_address
-# module.jumpbox-vm.sg_name
-# module.jumpbox-vm.nic_id
-# module.jumpbox-vm.sg_id
-# module.jumpbox-vm.vm_id
 
 resource "azurerm_network_security_rule" "jbox-rdp-sr" {
   name                        = "rdp"
